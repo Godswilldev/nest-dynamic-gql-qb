@@ -1,0 +1,45 @@
+{
+  "name": "nest-dynamic-gql-qb",
+  "version": "1.0.0",
+  "description": "Turn GraphQL selection into a single TypeORM query with leftJoin + addSelect. NestJS + TypeORM + GraphQL.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "nestjs",
+    "graphql",
+    "typeorm",
+    "query-builder",
+    "selection",
+    "dynamic",
+    "n+1",
+    "over-fetching"
+  ],
+  "author": "Godswilldev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Godswilldev/nest-dynamic-gql-qb"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "@nestjs/common": "^11.1.14",
+    "@nestjs/core": "^11.1.14",
+    "graphql": "^16.12.0",
+    "graphql-parse-resolve-info": "^4.14.1",
+    "typeorm": "^0.3.28"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
