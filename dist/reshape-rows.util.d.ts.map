@@ -1,0 +1,1 @@
+{"version":3,"file":"reshape-rows.util.d.ts","sourceRoot":"","sources":["../src/reshape-rows.util.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,SAAS,EAAE,MAAM,qCAAqC,CAAC;AAIrE,wBAAgB,sBAAsB,CACpC,IAAI,EAAE,MAAM,CAAC,MAAM,EAAE,OAAO,CAAC,EAAE,EAC/B,aAAa,EAAE,SAAS,EAAE,EAC1B,SAAS,EAAE,MAAM,EACjB,mBAAmB,CAAC,EAAE,MAAM,EAAE,GAC7B,MAAM,CAAC,MAAM,EAAE,OAAO,CAAC,EAAE,CAkC3B"}
