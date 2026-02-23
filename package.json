@@ -22,7 +22,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Godswilldev/nest-dynamic-gql-qb"
+    "url": "git+https://github.com/Godswilldev/nest-dynamic-gql-qb.git"
   },
   "files": [
     "dist",
