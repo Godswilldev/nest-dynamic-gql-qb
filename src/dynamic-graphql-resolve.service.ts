@@ -1,10 +1,10 @@
 import { DataSource } from "typeorm";
 import { Injectable } from "@nestjs/common";
 import { GraphQLResolveInfo } from "graphql";
-import { getSelectionTree } from "./selection-parser.util";
-import { reshapeRawRowsToNested } from "./reshape-rows.util";
-import { GRAPHQL_ENTITY_REGISTRY } from "./graphql-entity.registry";
-import { buildQueryBuilderFromSelection, NestedWhere } from "./query-builder-from-selection.util";
+import { reshapeRawRowsToNested } from "@src/reshape-rows.util";
+import { GRAPHQL_ENTITY_REGISTRY } from "@src/graphql-entity.registry";
+import { getSelectionTree, SelectionTree } from "@src/selection-parser.util";
+import { buildQueryBuilderFromSelection, NestedWhere } from "@src/query-builder-from-selection.util";
 
 @Injectable()
 export class DynamicGraphqlResolveService {
@@ -20,14 +20,27 @@ export class DynamicGraphqlResolveService {
     info: GraphQLResolveInfo;
     where: (args: A) => object;
     order?: Record<string, "ASC" | "DESC">;
+    /** THis can be used to override the selection tree for the query. When the query returns a wrapper (e.g. { data: AccountObject[] }), pass the selection for the list element type so the right fields are loaded. */
+    selectionTree?: SelectionTree;
   }): Promise<Record<string, unknown>[]> {
-    const { info, entity, graphqlTypeName, where, args, returnTypeName, order, take, skip } = params;
+    const {
+      info,
+      take,
+      args,
+      skip,
+      order,
+      where,
+      entity,
+      returnTypeName,
+      graphqlTypeName,
+      selectionTree: selectionTreeOverride,
+    } = params;
 
     if (!GRAPHQL_ENTITY_REGISTRY.has(graphqlTypeName)) {
       GRAPHQL_ENTITY_REGISTRY.set(graphqlTypeName, entity);
     }
 
-    const selectionTree = getSelectionTree(info, returnTypeName ?? graphqlTypeName);
+    const selectionTree = selectionTreeOverride ?? getSelectionTree(info, returnTypeName ?? graphqlTypeName);
     const hasSelection = selectionTree && Object.keys(selectionTree).length > 0;
 
     const { qb, aliasMetaList, rootAlias, rootPrimaryKeyNames } = buildQueryBuilderFromSelection({

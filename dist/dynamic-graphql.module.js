@@ -16,9 +16,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DynamicGraphqlModule = exports.DYNAMIC_GRAPHQL_OPTIONS = void 0;
 const typeorm_1 = require("typeorm");
 exports.DYNAMIC_GRAPHQL_OPTIONS = "DYNAMIC_GRAPHQL_OPTIONS";
+const dynamic_graphql_resolve_service_1 = require("@src/dynamic-graphql-resolve.service");
 const common_1 = require("@nestjs/common");
-const dynamic_graphql_resolve_service_1 = require("./dynamic-graphql-resolve.service");
-const auto_register_entities_util_1 = require("./auto-register-entities.util");
+const auto_register_entities_util_1 = require("@src/auto-register-entities.util");
 let DynamicGraphqlModule = DynamicGraphqlModule_1 = class DynamicGraphqlModule {
     constructor(dataSource, options) {
         this.dataSource = dataSource;
@@ -34,10 +34,7 @@ let DynamicGraphqlModule = DynamicGraphqlModule_1 = class DynamicGraphqlModule {
 exports.DynamicGraphqlModule = DynamicGraphqlModule;
 exports.DynamicGraphqlModule = DynamicGraphqlModule = DynamicGraphqlModule_1 = __decorate([
     (0, common_1.Global)(),
-    (0, common_1.Module)({
-        exports: [dynamic_graphql_resolve_service_1.DynamicGraphqlResolveService],
-        providers: [dynamic_graphql_resolve_service_1.DynamicGraphqlResolveService],
-    }),
+    (0, common_1.Module)({ exports: [dynamic_graphql_resolve_service_1.DynamicGraphqlResolveService], providers: [dynamic_graphql_resolve_service_1.DynamicGraphqlResolveService] }),
     __param(1, (0, common_1.Optional)()),
     __param(1, (0, common_1.Inject)(exports.DYNAMIC_GRAPHQL_OPTIONS)),
     __metadata("design:paramtypes", [typeorm_1.DataSource, Object])

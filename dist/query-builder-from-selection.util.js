@@ -1,14 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildQueryBuilderFromSelection = buildQueryBuilderFromSelection;
-const graphql_entity_registry_1 = require("./graphql-entity.registry");
-const graphql_entity_registry_2 = require("./graphql-entity.registry");
+const graphql_entity_registry_1 = require("@src/graphql-entity.registry");
+const graphql_entity_registry_2 = require("@src/graphql-entity.registry");
 const ROOT_ALIAS_DEFAULT = "root";
-/** Base-model property names to always include for the root entity (PK + common audit columns). */
 const BASE_ROOT_PROPERTY_NAMES = ["id", "createdAt", "updatedAt", "deletedAt", "rowId"];
-/**
- * Returns property names that exist on the entity and should be selected for the root: PKs first, then base columns.
- */
 function getBaseRootSelectProperties(meta) {
     const order = [...meta.primaryColumns.map((c) => c.propertyName)];
     for (const name of BASE_ROOT_PROPERTY_NAMES) {
@@ -20,10 +16,6 @@ function getBaseRootSelectProperties(meta) {
 function isPlainObject(v) {
     return typeof v === "object" && v !== null && !Array.isArray(v);
 }
-/**
- * Applies nested where: root-level columns → qb.where(rootWhere); each relation key with object value → andWhere on that relation's alias.
- * Assumes joins for relation keys already exist in qb (added from selection or from ensureJoinsForWhere).
- */
 function applyNestedWhere(qb, where, rootAlias, rootMeta, aliasMetaList, dataSource) {
     const rootColumnNames = new Set(rootMeta.columns.map((c) => c.propertyName));
     const rootWhere = {};
@@ -72,9 +64,6 @@ function applyNestedWhere(qb, where, rootAlias, rootMeta, aliasMetaList, dataSou
         }
     }
 }
-/**
- * Adds leftJoin for any relation key in where that is not already in aliasMetaList (so nested where can filter on them).
- */
 function ensureJoinsForWhere(qb, where, rootAlias, metadata, aliasMetaList, dataSource, aliasCounterRef) {
     const existingRelationKeys = new Set(aliasMetaList.filter((a) => a.parentAlias === rootAlias).map((a) => a.relationKey));
     for (const [key, value] of Object.entries(where)) {
@@ -100,13 +89,8 @@ function ensureJoinsForWhere(qb, where, rootAlias, metadata, aliasMetaList, data
         existingRelationKeys.add(key);
     }
 }
-/**
- * Builds a TypeORM SelectQueryBuilder from a GraphQL selection tree.
- * Root: only base columns (PK, createdAt, updatedAt, deletedAt, rowId) + columns requested in the query.
- * Nested relations: only requested fields. Uses leftJoin + addSelect (no default select).
- */
 function buildQueryBuilderFromSelection(params) {
-    const { dataSource, entityClass, graphqlTypeName, selectionTree, rootAlias = ROOT_ALIAS_DEFAULT, where = {} } = params;
+    const { dataSource, entityClass, graphqlTypeName, selectionTree, rootAlias = ROOT_ALIAS_DEFAULT, where = {}, } = params;
     const metadata = dataSource.getMetadata(entityClass);
     const repo = dataSource.getRepository(entityClass);
     const qb = repo.createQueryBuilder(rootAlias);
@@ -157,7 +141,9 @@ function buildQueryBuilderFromSelection(params) {
                 const nestedMeta = dataSource.getMetadata(nestedEntity);
                 const nestedAlias = `a${aliasCounterRef.current++}`;
                 qb.leftJoin(`${alias}.${propName}`, nestedAlias);
-                const nestedTree = fieldNode?.fieldsByTypeName ? fieldNode.fieldsByTypeName[Object.keys(fieldNode.fieldsByTypeName)[0]] : {};
+                const nestedTree = fieldNode?.fieldsByTypeName
+                    ? fieldNode.fieldsByTypeName[Object.keys(fieldNode.fieldsByTypeName)[0]]
+                    : {};
                 addSelectionsAndJoins(nestedAlias, nestedMeta, nestedTree, nestedTypeName, fieldName, alias);
             }
         }

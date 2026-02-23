@@ -1,4 +1,4 @@
-import type { AliasMeta } from "./query-builder-from-selection.util";
+import type { AliasMeta } from "@src/query-builder-from-selection.util";
 
 const GROUP_KEY_SEP = "\u0000";
 
@@ -62,7 +62,10 @@ function buildNestedFromRow(
   for (const child of children) {
     if (child.relationKey) {
       const childObj = buildNestedFromRow(row, aliasToMeta, aliasToChildren, child.alias);
-      if (Object.keys(childObj).length > 0 || child.entityPropertyNames.some((p) => row[`${child.alias}_${p}`] != null)) {
+      if (
+        Object.keys(childObj).length > 0 ||
+        child.entityPropertyNames.some((p) => row[`${child.alias}_${p}`] != null)
+      ) {
         out[child.relationKey] = childObj;
       }
     }

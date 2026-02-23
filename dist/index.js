@@ -14,11 +14,11 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("./reshape-rows.util"), exports);
-__exportStar(require("./selection-parser.util"), exports);
-__exportStar(require("./dynamic-graphql.module"), exports);
-__exportStar(require("./graphql-entity.registry"), exports);
-__exportStar(require("./auto-register-entities.util"), exports);
-__exportStar(require("./dynamic-graphql-resolve.service"), exports);
-__exportStar(require("./query-builder-from-selection.util"), exports);
+__exportStar(require("@src/reshape-rows.util"), exports);
+__exportStar(require("@src/selection-parser.util"), exports);
+__exportStar(require("@src/dynamic-graphql.module"), exports);
+__exportStar(require("@src/graphql-entity.registry"), exports);
+__exportStar(require("@src/auto-register-entities.util"), exports);
+__exportStar(require("@src/dynamic-graphql-resolve.service"), exports);
+__exportStar(require("@src/query-builder-from-selection.util"), exports);
 //# sourceMappingURL=index.js.map

@@ -12,20 +12,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DynamicGraphqlResolveService = void 0;
 const typeorm_1 = require("typeorm");
 const common_1 = require("@nestjs/common");
-const selection_parser_util_1 = require("./selection-parser.util");
-const reshape_rows_util_1 = require("./reshape-rows.util");
-const graphql_entity_registry_1 = require("./graphql-entity.registry");
-const query_builder_from_selection_util_1 = require("./query-builder-from-selection.util");
+const reshape_rows_util_1 = require("@src/reshape-rows.util");
+const graphql_entity_registry_1 = require("@src/graphql-entity.registry");
+const selection_parser_util_1 = require("@src/selection-parser.util");
+const query_builder_from_selection_util_1 = require("@src/query-builder-from-selection.util");
 let DynamicGraphqlResolveService = class DynamicGraphqlResolveService {
     constructor(dataSource) {
         this.dataSource = dataSource;
     }
     async resolveEntity(params) {
-        const { info, entity, graphqlTypeName, where, args, returnTypeName, order, take, skip } = params;
+        const { info, take, args, skip, order, where, entity, returnTypeName, graphqlTypeName, selectionTree: selectionTreeOverride, } = params;
         if (!graphql_entity_registry_1.GRAPHQL_ENTITY_REGISTRY.has(graphqlTypeName)) {
             graphql_entity_registry_1.GRAPHQL_ENTITY_REGISTRY.set(graphqlTypeName, entity);
         }
-        const selectionTree = (0, selection_parser_util_1.getSelectionTree)(info, returnTypeName ?? graphqlTypeName);
+        const selectionTree = selectionTreeOverride ?? (0, selection_parser_util_1.getSelectionTree)(info, returnTypeName ?? graphqlTypeName);
         const hasSelection = selectionTree && Object.keys(selectionTree).length > 0;
         const { qb, aliasMetaList, rootAlias, rootPrimaryKeyNames } = (0, query_builder_from_selection_util_1.buildQueryBuilderFromSelection)({
             graphqlTypeName,

@@ -14,7 +14,8 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "paths": { "@src/*": ["./src/*"] }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

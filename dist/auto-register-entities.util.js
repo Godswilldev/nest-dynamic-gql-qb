@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.autoRegisterEntities = autoRegisterEntities;
-const graphql_entity_registry_1 = require("./graphql-entity.registry");
+const graphql_entity_registry_1 = require("@src/graphql-entity.registry");
 function autoRegisterEntities(dataSource, options = {}) {
     const { overrides = {}, fieldMap = {} } = options;
     for (const metadata of dataSource.entityMetadatas) {

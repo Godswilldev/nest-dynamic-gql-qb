@@ -48,7 +48,8 @@ function buildNestedFromRow(row, aliasToMeta, aliasToChildren, currentAlias) {
     for (const child of children) {
         if (child.relationKey) {
             const childObj = buildNestedFromRow(row, aliasToMeta, aliasToChildren, child.alias);
-            if (Object.keys(childObj).length > 0 || child.entityPropertyNames.some((p) => row[`${child.alias}_${p}`] != null)) {
+            if (Object.keys(childObj).length > 0 ||
+                child.entityPropertyNames.some((p) => row[`${child.alias}_${p}`] != null)) {
                 out[child.relationKey] = childObj;
             }
         }

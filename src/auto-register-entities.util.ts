@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import { GRAPHQL_ENTITY_REGISTRY, mapGraphQLFieldToProperty } from "./graphql-entity.registry";
+import { GRAPHQL_ENTITY_REGISTRY, mapGraphQLFieldToProperty } from "@src/graphql-entity.registry";
 
 export interface DynamicGraphqlModuleOptions {
   overrides?: Record<string, Function>;
